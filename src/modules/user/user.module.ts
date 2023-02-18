@@ -5,7 +5,6 @@ import { DeleteUserHttpController } from './commands/delete-user/delete-user.htt
 import { CreateUserCliController } from './commands/create-user/create-user.cli.controller';
 import { FindUsersHttpController } from './queries/find-users/find-users.http.controller';
 import { CreateUserMessageController } from './commands/create-user/create-user.message.controller';
-import { CreateUserGraphqlResolver } from './commands/create-user/graphql-example/create-user.graphql-resolver';
 import { CreateUserService } from './commands/create-user/create-user.service';
 import { DeleteUserService } from './commands/delete-user/delete-user.service';
 import { FindUsersQueryHandler } from './queries/find-users/find-users.query-handler';
@@ -23,7 +22,7 @@ const messageControllers = [CreateUserMessageController];
 
 const cliControllers: Provider[] = [CreateUserCliController];
 
-const graphqlResolvers: Provider[] = [CreateUserGraphqlResolver];
+const graphqlResolvers: Provider[] = [];
 
 const commandHandlers: Provider[] = [CreateUserService, DeleteUserService];
 

@@ -1,16 +1,23 @@
+import { z } from 'zod';
+import { Injectable } from '@nestjs/common';
 import { Mapper } from '@libs/ddd';
-import { UserModel, userSchema } from './database/user.repository';
+import { UserRoles } from './domain/user.types';
 import { Address } from './domain/value-objects/address.value-object';
 import { UserEntity } from './domain/user.entity';
 import { UserResponseDto } from './dtos/user.response.dto';
-import { Injectable } from '@nestjs/common';
 
-/**
- * Mapper constructs objects that are used in different layers:
- * Record is an object that is stored in a database,
- * Entity is an object that is used in application domain layer,
- * and a ResponseDTO is an object returned to a user (usually as json).
- */
+export const userSchema = z.object({
+  id: z.string().uuid(),
+  createdAt: z.preprocess((val: any) => new Date(val), z.date()),
+  updatedAt: z.preprocess((val: any) => new Date(val), z.date()),
+  email: z.string().email(),
+  country: z.string().min(1).max(255),
+  postalCode: z.string().min(1).max(20),
+  street: z.string().min(1).max(255),
+  role: z.nativeEnum(UserRoles),
+});
+
+export type UserModel = z.TypeOf<typeof userSchema>;
 
 @Injectable()
 export class UserMapper

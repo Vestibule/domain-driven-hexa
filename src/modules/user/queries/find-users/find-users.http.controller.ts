@@ -1,5 +1,4 @@
 import { Body, Controller, Get, HttpStatus, Query } from '@nestjs/common';
-import { routesV1 } from '@config/app.routes';
 import { QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Result } from 'oxide.ts';
@@ -9,17 +8,17 @@ import { UserMapper } from '@modules/user/user.mapper';
 import { Paginated } from '@src/libs/ddd';
 import { UserPaginatedResponseDto } from '../../dtos/user.paginated.response.dto';
 import { PaginatedQueryRequestDto } from '@src/libs/api/paginated-query.request.dto';
-import { UserModel } from '../../database/user.repository';
+import { UserModel } from '../../user.mapper';
 import { ResponseBase } from '@src/libs/api/response.base';
 
-@Controller(routesV1.version)
+@Controller('/users')
 export class FindUsersHttpController {
   constructor(
     private readonly queryBus: QueryBus,
     private readonly userMapper: UserMapper,
   ) {}
 
-  @Get(routesV1.user.root)
+  @Get('/:id')
   @ApiOperation({ summary: 'Find users' })
   @ApiResponse({
     status: HttpStatus.OK,

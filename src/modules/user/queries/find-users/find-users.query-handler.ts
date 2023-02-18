@@ -4,7 +4,7 @@ import { PaginatedParams, PaginatedQueryBase } from '@libs/ddd/query.base';
 import { Paginated } from '@src/libs/ddd';
 import { InjectPool } from 'nestjs-slonik';
 import { DatabasePool, sql } from 'slonik';
-import { UserModel, userSchema } from '../../database/user.repository';
+import { UserModel, userSchema } from '../../user.mapper';
 
 export class FindUsersQuery extends PaginatedQueryBase {
   readonly country?: string;

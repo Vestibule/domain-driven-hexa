@@ -5,7 +5,6 @@ import {
   HttpStatus,
   Post,
 } from '@nestjs/common';
-import { routesV1 } from '@config/app.routes';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CommandBus } from '@nestjs/cqrs';
 import { match, Result } from 'oxide.ts';
@@ -16,7 +15,7 @@ import { IdResponse } from '@libs/api/id.response.dto';
 import { AggregateID } from '@libs/ddd';
 import { ApiErrorResponse } from '@src/libs/api/api-error.response';
 
-@Controller(routesV1.version)
+@Controller('users')
 export class CreateUserHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
@@ -34,7 +33,7 @@ export class CreateUserHttpController {
     status: HttpStatus.BAD_REQUEST,
     type: ApiErrorResponse,
   })
-  @Post(routesV1.user.root)
+  @Post('/')
   async create(@Body() body: CreateUserRequestDto): Promise<IdResponse> {
     const command = new CreateUserCommand(body);
 

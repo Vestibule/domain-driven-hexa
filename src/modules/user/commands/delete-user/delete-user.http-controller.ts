@@ -5,7 +5,6 @@ import {
   NotFoundException as NotFoundHttpException,
   Param,
 } from '@nestjs/common';
-import { routesV1 } from '@config/app.routes';
 import { CommandBus } from '@nestjs/cqrs';
 import { DeleteUserCommand } from './delete-user.service';
 import { match, Result } from 'oxide.ts';
@@ -13,7 +12,7 @@ import { NotFoundException } from '@libs/exceptions';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ApiErrorResponse } from '@src/libs/api/api-error.response';
 
-@Controller(routesV1.version)
+@Controller('/users')
 export class DeleteUserHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
@@ -27,7 +26,7 @@ export class DeleteUserHttpController {
     description: NotFoundException.message,
     type: ApiErrorResponse,
   })
-  @Delete(routesV1.user.delete)
+  @Delete('/:id')
   async deleteUser(@Param('id') id: string): Promise<void> {
     const command = new DeleteUserCommand({ userId: id });
     const result: Result<boolean, NotFoundException> =

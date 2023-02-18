@@ -1,7 +1,17 @@
+import { z } from 'zod';
 import { Mapper } from '@libs/ddd';
 import { Injectable } from '@nestjs/common';
 import { WalletEntity } from './domain/wallet.entity';
-import { WalletModel, walletSchema } from './database/wallet.repository';
+
+export const walletSchema = z.object({
+  id: z.string().min(1).max(255),
+  createdAt: z.preprocess((val: any) => new Date(val), z.date()),
+  updatedAt: z.preprocess((val: any) => new Date(val), z.date()),
+  balance: z.number().min(0).max(9999999),
+  userId: z.string().min(1).max(255),
+});
+
+export type WalletModel = z.TypeOf<typeof walletSchema>;
 
 @Injectable()
 export class WalletMapper implements Mapper<WalletEntity, WalletModel> {
